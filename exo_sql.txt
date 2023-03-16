@@ -1,0 +1,48 @@
+--exercices-sql.fr/problem.html
+
+--Calculer la moyenne par matiere, tous élèves confondus. 
+--Afficher le nom de la matiere ainsi que la moyenne. 
+--Trier les résultats de la moyenne la plus élevée à la plus basse.
+select matiere.mat_nom, avg(note.not_note) as moyenne
+from matiere
+inner join note on matiere.mat_id=note.mat_id
+group by matiere.mat_nom
+order by moyenne DESC;
+
+
+-- id=12
+select eleve.ele_nom, classe.cla_nom, avg(note.not_note) as moyenne
+from eleve
+left join note on eleve.ele_id=note.ele_id
+left join classe on classe.cla_id = eleve.cla_id
+group by eleve.ele_nom
+order by eleve.ele_nom;
+
+--id=13
+SELECT *
+FROM eleve
+WHERE NOT EXISTS (SELECT * FROM note WHERE note.ele_id = eleve.ele_id);
+
+--id=14
+select matiere.mat_nom, avg(note.not_note) as moyenne
+from matiere
+left join note on matiere.mat_id=note.mat_id
+group by matiere.mat_nom
+order by moyenne ASC;
+
+-- Réponse :id=15
+select eleve.ele_nom, avg(note.not_note) as moyenne
+from eleve
+inner join note on eleve.ele_id=note.ele_id
+group by eleve.ele_nom
+having moyenne >= 12
+order by moyenne;
+
+
+
+SELECT * FROM customer AS C 
+LEFT JOIN payment AS P ON C.customer_id = P.customer_id
+UNION ALL
+SELECT * FROM customer AS C 
+RIGHT JOIN payment AS P ON C.customer_id = P.customer_id
+WHERE C.customer_id IS NULL OR P.customer_id IS NULL;

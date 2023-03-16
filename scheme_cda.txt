@@ -1,0 +1,26 @@
+CREATE SCHEMA `cda` DEFAULT CHARACTER SET utf8 ;
+
+CREATE TABLE `cda`.`conditionnement` (
+  `id_condi` INT NOT NULL AUTO_INCREMENT,
+  `lib_condi` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_condi`));
+
+CREATE TABLE `cda`.`produit` (
+  `id_produit` INT NOT NULL AUTO_INCREMENT,
+  `libelle_prod` VARCHAR(45) NULL,
+  `id_famille` INT NULL,
+  `id_condi` INT NULL,
+  `prix_uni_ht` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_produit`),
+  INDEX `id_famille_idx` (`id_famille` ASC) VISIBLE,
+  INDEX `id_condi_idx` (`id_condi` ASC) VISIBLE,
+  CONSTRAINT `id_famille`
+    FOREIGN KEY (`id_famille`)
+    REFERENCES `cda`.`famille` (`id_famille`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `id_condi`
+    FOREIGN KEY (`id_condi`)
+    REFERENCES `cda`.`conditionnement` (`id_condi`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
